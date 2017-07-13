@@ -1,0 +1,180 @@
+% !TEX encoding = UTF-8 Unicodec
+%
+%% hknumsheets.tex
+%% Documentation for the hknumsheets package
+%%
+%% Copyright (c) 2017 Henning Kerstan
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+% 
+% The Current Maintainer of this work is Henning Kerstan.
+%
+% This work consists of the files `hknumsheets.sty' and `hknumsheets.tex'.
+%
+
+
+% use KOMA article in twocolumn layout
+\documentclass[
+  twocolumn,%
+  fontsize=9pt,%        this gives roughly 80 characters per line in twocolumns
+  DIV=calc,%            calculate typearea
+  numbers=noendperiod%  don't print periods at end of numbers
+]{scrartcl}
+
+
+% font selection & set up
+\usepackage{charter} % Charter as serif font (main text)
+\usepackage{biolinum} % Linux Biolinum as sans serif font (headings)
+\usepackage[scaled=0.85]{beramono} % Bera Mono as monospace font (code listings)
+\usepackage{eulervm} % Euler virtual math fonts
+\RequirePackage[T1]{fontenc} % T1 fontenc
+\usepackage[final]{microtype}
+\setkomafont{captionlabel}{\sffamily\small\bfseries}
+\setkomafont{caption}{\sffamily\small}
+\usepackage[english]{babel}
+
+
+% load the hknumsheets package
+\usepackage{hknumsheets} 
+
+
+% load xcolor for colors in code listings
+\usepackage[dvipsnames]{xcolor}
+
+
+% set up code listings
+% - highlight standard LaTeX keywords in bold gray
+% - highlight numsheets keywords in bold navy blue
+\newcommand{\emphstyle}{\ttfamily\color{NavyBlue}\bfseries}%
+\newcommand{\keyword}[1]{{\emphstyle#1}}%
+\usepackage{listings} 
+\lstset{%
+  language=[LaTeX]TeX,%
+  basicstyle=\small\ttfamily,%
+  keywordstyle=,%\color{black!70},%
+  keywords={equal},%
+  identifierstyle=,%
+  commentstyle=\itshape\color{OliveGreen},% 
+  stringstyle=,%
+  showstringspaces=false,%
+  emphstyle=\emphstyle,%
+  breaklines=true,%
+  backgroundcolor=\color{black!5},%
+  numbers=none,
+  xleftmargin=1ex,
+  xrightmargin=1ex,
+  numberstyle=\small\ttfamily, 
+  numbersep=1ex,
+  emph={%
+    numsheets,
+    hknumsheets
+  }
+} 
+
+
+% obtain package version using xstring package to obtain 17 leftmost characters in the internal package version string
+\makeatletter
+\usepackage{xstring}
+\newcommand{\packageversion}{\StrBefore[2]{\expandafter\csname ver@hknumsheets.sty\endcsname}{ }}
+\makeatother
+
+
+
+% use gitinfo2 package for displaying git commit information in footer
+\usepackage[mark]{gitinfo2}
+
+
+
+
+% set up metadata
+\author{Henning Kerstan}
+\title{%
+  The hknumsheets Package\thanks{%
+    \url{https://github.com/henningkerstan/hknumsheets}%
+  }
+}
+\subtitle{\packageversion}
+\date{}
+
+
+% use enumitem package and set up enumerate/itemize layout
+\usepackage{enumitem}
+\setlist[itemize]{%
+  leftmargin=*,%
+  itemsep=5pt,%
+  topsep=5pt,%
+  parsep=0pt,%
+  partopsep=0pt,%
+  label=\textcolor{black}{$\triangleright$}%
+}%
+\setlist[enumerate]{%
+  leftmargin=*,%
+  itemsep=5pt,%
+  topsep=5pt,%
+  parsep=0pt,%
+  partopsep=0pt,%
+  label=\textcolor{black}{\arabic*.},%
+  ref=\arabic*%
+}%
+
+
+% use hyperref for hyperlinks
+\usepackage[
+  unicode=true,%
+  pdfa,%
+  colorlinks=false,%
+  linktoc=page,
+  pdfauthor={Henning Kerstan},
+  pdftitle={The numsheets Package}
+]{hyperref}
+
+
+% start of the actual document
+\begin{document}
+\maketitle
+\begin{abstract}
+\noindent\itshape The hknumsheets package provides a macro which expands to the total number of sheets required for double-sided printing of the document in which it is used.
+\end{abstract}
+
+\section{Usage}
+To use this package copy the file `numsheets.sty' into the same folder as your document (or, if you plan to use it more often, copy it into your local texmf directory) and load it by typing
+\begin{lstlisting}
+\usepackage{hknumsheets}
+\end{lstlisting}
+anywhere in your document's preamble. Afterwards you can use the macro
+\begin{lstlisting}
+\numsheets
+\end{lstlisting}
+anywhere in your document and it will expand to the number of sheets required for a double-sided printing of your document.
+
+Note that this package loads the \texttt{lastpage} package.\newpage
+
+\section{Copyright and License}
+Copyright \copyright\ 2017 Henning Kerstan.\medskip
+
+\noindent This work may be distributed and/or modified under the conditions of the LaTeX Project Public License, either version 1.3 of this license or (at your option) any later version. The latest version of this license is in\medskip
+
+   \url{http://www.latex-project.org/lppl.txt}\medskip
+
+\noindent and version 1.3 or later is part of all distributions of LaTeX version 2005/12/01 or later.\medskip
+
+\noindent This work has the LPPL maintenance status `maintained'.\medskip
+
+\noindent The Current Maintainer of this work is Henning Kerstan.\medskip
+
+\noindent This work consists of the files `hknumsheets.sty' and `hknumsheets.tex'.
+
+
+\section{Version History}
+\begin{description}
+\item[\packageversion] Initial version published on GitHub.
+\end{description}
+\end{document}
